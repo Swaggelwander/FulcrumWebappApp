@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,9 +51,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void init(){
+        String s = "xd";
+        try {
+            s = new RequestTask().execute("http://kapaspeak.tk:1013/").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
         TableLayout ll = findViewById(R.id.table);
-        List<String> list = Arrays.asList("test", "test2", "test3", "test4");
+        List<String> list = Arrays.asList(s, "test2", "test3", "test4");
         int antalrader = list.size();
         for (int i = 0; i < antalrader; i++) {
             TableRow row= new TableRow(this);
@@ -66,7 +75,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    
+
 
     @Override
     public void onBackPressed() {
